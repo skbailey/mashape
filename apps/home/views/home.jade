@@ -1,0 +1,25 @@
+extends ../../../views/layout
+
+block content
+  form#artist-select(action="/artists", method="GET")
+    fieldset
+      legend
+      label Artist
+        input(class="artist", type="text", placeholder="Artist", name="artist")
+        input(type="submit", value="Find")
+
+  script
+    jQuery(function($){
+      $('#artist-select').submit(function(evt){
+        evt.preventDefault();
+
+        var form = $(this);
+        var artist = form.find('.artist');
+        var artistName = artist.val();
+        artist.val('');
+        console.log("Finding Artist...", artistName);
+        $.get('artists/' + artistName).done(function(data, textStatus, jqXHR){
+          console.log("Data: ", data);
+        });
+      });
+    });
